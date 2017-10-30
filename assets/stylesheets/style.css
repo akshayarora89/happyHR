@@ -3060,7 +3060,11 @@ width: 50%;
 }
 
 }
-
+.removeFileBtn {
+  margin-top: 5px;
+  font-size: 12px;
+  padding: 4px 6px;
+}
 
 
 @media (max-width:449px)
@@ -3175,7 +3179,6 @@ width: 50%;
     {
         font-size: 13px;
     }
-	
 }
 
 
