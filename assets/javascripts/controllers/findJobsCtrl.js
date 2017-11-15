@@ -3,16 +3,18 @@
 angular.module('happyHrApp').controller('FindJobsCtrl', ['$scope', 'IntegrationConstants', 'JobService',
   function($scope, IntegrationConstants, JobService) {
     $scope.showJobFunctionDropdown = false;
+    $scope.$parent.pageHeading = "Find a job that makes you happy";
+    $scope.$parent.pageDetails = "Search or browse jobs across Australia and apply!";
     var searchOptions = {};
     var payscale = {
       "full-time": {
         "from": {
           "name": "Paying Annual",
-          "range": ["0", "40K", "60K", "80K", "100K", "120K", "140K", "160K", "180K"]
+          "range": ["0", "40000", "60000", "80000", "100000", "120000", "140000", "160000", "180000"]
         },
         "to": {
           "name": "to",
-          "range": ["40K", "60K", "80K", "100K", "120K", "140K", "160K", "180K", "200K+"]
+          "range": ["40000", "60000", "80000", "100000", "120000", "140000", "160000", "180000", "200000+"]
         }
       },
       "part-time": {
@@ -144,6 +146,7 @@ angular.module('happyHrApp').controller('FindJobsCtrl', ['$scope', 'IntegrationC
     }
     $scope.payscaleChanged = function(type) {
       console.log("payscale change event>>>>", type, $scope.selectedPayscale);
+
     }
 
     $scope.setPage = function(page) {
@@ -152,6 +155,23 @@ angular.module('happyHrApp').controller('FindJobsCtrl', ['$scope', 'IntegrationC
       }
       $scope.pager = JobService.getPager($scope.dummyJobs.length, page);
       $scope.searchedJobs = $scope.dummyJobs.slice($scope.pager.startIndex, $scope.pager.endIndex + 1);
+    }
+
+    var searchJobsByPayscale = function(jobs, payscale) {
+      if(jobs && jobs.length && payscale){
+        var filteredJobs = jobs.filter(function(job) {
+          if(filterSalary(job.salary) >= filterSalary(payscale.from) && filterSalary(job.salary) <= filterSalary(payscale.to)) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        console.log("filtered jobs>>>", filteredJobs);
+      }
+    }
+    var filterSalary = function(salary) {
+      console.log("filtered salary>>>>", parseInt(salary.replace('$', '').trim()));
+      return parseInt(salary.replace('$', '').trim());
     }
   }
 ]);

@@ -3,6 +3,8 @@
 angular.module('happyHrApp').controller('AppCtrl', ['$scope', 'Upload', '$timeout', 'API', 'JobService',
   function($scope, Upload, $timeout, API, JobService) {
     $scope.jobDetails = {};
+    $scope.pageHeading = "";
+    $scope.pageDetails = "";
     var addApplyJobModalListeners = function() {
     	$("#applyJobModal").on('shown.bs.modal', function(e) {
 	    	$scope.jobDetails.advertisementID = $(e.relatedTarget).data("advid");

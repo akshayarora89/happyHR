@@ -10,3 +10,13 @@ gulp.task('default', ['watch', 'dev-inject'], function() {
     console.log(chalk.bgGreen('Welcome to') + chalk.bold.bgGreen(' **HappyHR(Dev Mode)**'));
   });
 });
+
+
+gulp.task('build', function() {
+    runSequence(['js-uglify', 'bower-uglify', 'minify-css', 'minify-bower-css', 'copy-index', 'copy-fonts', 'copy-images', 'copy-libs', 'copy-templates'], 'prod-inject', function() {
+        exec("whoami", function(error, result) { 
+            gulp.run('remove-bundles');
+            console.log(chalk.bgGreen('Copy of ') + chalk.bold.bgGreen(' **COSMOS(Prod Mode)** - Frontend in dist folder') + chalk.bgGreen(' created! '));
+        });
+    });
+});

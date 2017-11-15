@@ -5,6 +5,8 @@ angular.module( 'happyHrApp' ).controller( 'FaqCtrl',
 	function( $scope, JobService) 
 {
   $scope.showSearchResults = false;
+  $scope.$parent.pageHeading = "";
+  $scope.$parent.pageDetails = "";
   JobService.getFaqCategories().get(function(response) {
     $scope.categories = response.data && response.data.length ? response.data : [];
     getAllFaqDetails($scope.categories, function(data) {

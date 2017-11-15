@@ -16,3 +16,18 @@ gulp.task('dev-inject', function() {
     .pipe(inject(cssFiles))
     .pipe(gulp.dest('./'));
 });
+
+gulp.task('prod-inject', function () {
+  var target = gulp.src('./dist/index.html');
+  // It's not necessary to read the files (will speed up things), we're only after their paths: 
+  var jsFiles = gulp.src('./dist/assets/javascripts/dependencies.min.js', {read: false});
+  var bowerJsFiles = gulp.src('./dist/assets/javascripts/bower-dependencies.min.js', {read: false});
+  var bowerCssFiles = gulp.src('./dist/assets/stylesheets/bower-css.min.css', {read: false});
+  var cssFiles = gulp.src('./dist/assets/stylesheets/application-css.min.css', {read: false});
+ 
+  target.pipe(inject(bowerJsFiles, {name: 'bower', ignorePath: 'dist'}))
+    .pipe(inject(bowerCssFiles, {name: 'bower', ignorePath: 'dist'}))
+    .pipe(inject(jsFiles, {ignorePath: 'dist'}))
+    .pipe(inject(cssFiles, {ignorePath: 'dist'}))
+    .pipe(gulp.dest('./dist/'));
+});

@@ -5,7 +5,7 @@ gulp.task('watch', function() {
     server: {
       baseDir: "./"
     },
-    port: 8000
+    port: 8001
   });
   gulp.watch("./index.html").on('change', browserSync.reload);
   gulp.watch("assets/templates/*.html").on('change', browserSync.reload);
